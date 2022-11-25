@@ -1,15 +1,24 @@
 import React from 'react';
 
-import { HomeScreen } from './screens/publicScreens';
+import { Suspense } from './components';
+import RootRouter from './routers/Root';
 
 import './App.less';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <HomeScreen />
+      <RootRouter />
     </div>
   );
 };
 
-export default App;
+export const AppConfig: React.FC = () => {
+  return (
+    <React.Suspense fallback={<Suspense />}>
+      <App />
+    </React.Suspense>
+  );
+};
+
+export default AppConfig;
