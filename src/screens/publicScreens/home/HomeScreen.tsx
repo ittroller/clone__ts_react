@@ -1,6 +1,7 @@
+import React from 'react';
 import { Button } from 'antd';
 
-export default function HomeScreen() {
+const HomeScreen: React.FC = () => {
   return (
     <>
       Home Screen
@@ -8,4 +9,6 @@ export default function HomeScreen() {
       <Button type="primary">Button</Button>
     </>
   );
-}
+};
+
+export default HomeScreen;
