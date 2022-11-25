@@ -1,6 +1,6 @@
 import { HomeScreen } from './screens/publicScreens';
 
-import './App.css';
+import './App.less';
 
 function App() {
   return (
