@@ -17,11 +17,7 @@ import RootRouter from './routers/Root';
 import './App.less';
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <RootRouter />
-    </div>
-  );
+  return <RootRouter />;
 };
 
 export const AppConfig: React.FC = () => {
