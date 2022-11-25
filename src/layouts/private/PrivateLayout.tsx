@@ -1,11 +1,10 @@
 import React from 'react';
+import { useOutlet } from 'react-router-dom';
 
-interface PrivateLayoutProps {
-  children: React.ReactDOM;
-}
+const PrivateLayout: React.FC = () => {
+  const outlet = useOutlet();
 
-const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
-  return <>{children}</>;
+  return <div>{outlet}</div>;
 };
 
 export default PrivateLayout;

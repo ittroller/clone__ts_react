@@ -1,3 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-export const reducer = combineReducers({});
+import { appReducer } from 'src/stores/app';
+
+export const reducer = combineReducers({
+  app: appReducer,
+});

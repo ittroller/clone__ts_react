@@ -13,6 +13,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/member-delimiter-style': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
 
     semi: 'off',
     eqeqeq: 'off',
