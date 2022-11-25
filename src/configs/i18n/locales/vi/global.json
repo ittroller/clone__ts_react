@@ -1,0 +1,17 @@
+{
+  "loading": "Đang tải",
+
+  "header_search": "Tìm kiếm...",
+  "go_to_login": "Đi đến đăng nhập",
+  "go_to_register": "Đi đến đăng ký",
+  "go_to_home": "Đi đến trang chủ",
+  "go_to_dashboard": "Đi đến trang quản trị",
+  "logout": "Đăng xuất",
+
+  "menu_home": "Trang chủ",
+  "menu_guide": "Hướng dẫn",
+  "menu_about": "Về chúng tôi",
+  "menu_blogs": "Bài viết",
+  "menu_dashboard": "Trang quản trị",
+  "menu_account": "Tài khoản"
+}
