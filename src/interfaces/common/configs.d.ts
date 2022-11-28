@@ -5,6 +5,6 @@ declare namespace NodeJS {
     PUBLIC_URL: string;
     REACT_APP_TOKEN_KEY_NAME: string;
     REACT_APP_API_URL: string;
-    REACT_APP_REFRESH_TOKEN_KEY_NAME: string;
+    REACT_APP_VERSION: string;
   }
 }
