@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const DashboardScreen: React.FC = () => {
-  useEffect(() => {
-    console.log('DashboardScreen.tsx - useEffect');
-  }, []);
-
   return <>Dashboard Screen</>;
 };
 

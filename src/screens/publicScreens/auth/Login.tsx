@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Col, Form, Layout, Row } from 'antd';
 import styled from 'styled-components';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'src/stores';
 
 import { InputField } from 'src/components/form';
+import { loginAction } from 'src/stores/screens/auth/auth.action';
 
 const { Content } = Layout;
 
 const LoginScreen: React.FC = () => {
-  useEffect(() => {
-    console.log('LoginScreen.tsx - useEffect');
-  }, []);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const validationSchema = yup.object().shape({
     email: yup.string().email().required('EMAIL REQUIRED'),
@@ -20,12 +22,16 @@ const LoginScreen: React.FC = () => {
   });
 
   const initialValues = {
-    email: '',
-    password: '',
+    email: 'ittroller8@gmail.com',
+    password: '123456789',
+  };
+
+  const onLoginSuccess = (): void => {
+    navigate('/dashboard');
   };
 
   const handleLogin = (value): void => {
-    console.log(value);
+    void dispatch(loginAction({ data: value, callback: onLoginSuccess }));
   };
 
   const formik = useFormik({
@@ -71,7 +77,7 @@ const LoginScreen: React.FC = () => {
               touched={formik.touched.password}
             />
 
-            <Button className="btn-submit" type="primary">
+            <Button className="btn-submit" htmlType="submit" type="primary">
               Login
             </Button>
           </Form>
