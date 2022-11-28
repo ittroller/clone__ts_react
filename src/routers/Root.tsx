@@ -25,11 +25,15 @@ const RootRouter: React.FC = () => {
     const token = localStorage.getItem(LOCAL_STORAGE_KEY.TOKEN) as string;
 
     if (token) {
-      void initialFunction();
+      if (!meInfo) {
+        void initialFunction();
+      } else {
+        setRoutes([..._publicRoutes, ..._privateRoutes]);
+      }
     } else {
       setRoutes([..._publicRoutes]);
     }
-  }, []);
+  }, [meInfo]);
 
   useEffect(() => {
     if (error) {
@@ -38,13 +42,17 @@ const RootRouter: React.FC = () => {
     } else {
       setRoutes([..._publicRoutes, ..._privateRoutes]);
     }
-  }, [meInfo, error]);
+  }, [error]);
 
-  return (
-    <SpinStyle spinning={isLoading} wrapperClassName="root-spin" className="root-spin-component" tip="Loading...">
-      {useRoutes(routes)}
-    </SpinStyle>
-  );
+  if (isLoading) {
+    return (
+      <SpinStyle spinning={isLoading} wrapperClassName="root-spin" className="root-spin-component" tip="Loading...">
+        {useRoutes(routes)}
+      </SpinStyle>
+    );
+  }
+
+  return <>{useRoutes(routes)}</>;
 };
 
 export default RootRouter;

@@ -1,32 +1,45 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import styled from 'styled-components';
-import { Link, useOutlet } from 'react-router-dom';
+import { Link, useLocation, useOutlet } from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const PrivateLayout: React.FC = () => {
   const outlet = useOutlet();
+  const location = useLocation();
 
   const MENU = [
     {
-      key: 'HOME',
+      key: 'DASHBOARD',
       icon: <UploadOutlined />,
-      label: 'HOME',
+      label: <Link to="/dashboard">Dashboard</Link>,
+      path: '/dashboard',
     },
     {
-      key: 'ABOUT',
+      key: 'ACCOUNT',
       icon: <UserOutlined />,
-      label: 'ABOUT',
+      label: <Link to="/account">Account</Link>,
+      path: '/account',
+    },
+    {
+      key: 'HOME',
+      icon: <UserOutlined />,
+      label: <Link to="/">Home</Link>,
+      path: '/',
     },
   ];
+
+  const selectedMenu = useMemo(() => {
+    return MENU.find(item => item.path === location.pathname || item.path === '/')?.key ?? '';
+  }, [location.pathname]);
 
   return (
     <PrivateLayoutStyle>
       <Sider className="layout-sider" breakpoint="lg" collapsedWidth="0" onBreakpoint={_ => {}} onCollapse={_ => {}}>
         <div className="logo">LOGO</div>
-        <Menu className="layout-menu" mode="inline" defaultSelectedKeys={['HOME']} items={MENU} />
+        <Menu className="layout-menu" mode="inline" defaultSelectedKeys={[selectedMenu]} items={MENU} />
       </Sider>
       <Layout className="layout-body">
         <Header className="body-header">
