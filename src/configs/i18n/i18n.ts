@@ -24,7 +24,9 @@ i18n
       escapeValue: false, // react already safes from xss
     },
   })
-  .catch(error => console.log(error));
+  .catch(error => {
+    throw error;
+  });
 
 const I18n = i18n;
 // const t = (...args: Parameters<TFunction>) => I18n.t(...args);

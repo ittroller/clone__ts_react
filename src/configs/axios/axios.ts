@@ -49,7 +49,7 @@ export class AxiosClient {
   _handleResponseSuccess = ({ data }: AxiosResponse): AxiosResponse => data;
 
   _handleResponseError = async (error: AxiosError & Error): Promise<never> => {
-    return await Promise.reject(error);
+    return await Promise.reject(error?.response?.data);
   };
 
   async request<T = any, R = AxiosResponse<T>, D = any>(config: AxiosRequestConfig<D>): Promise<R> {
