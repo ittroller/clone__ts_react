@@ -12,7 +12,7 @@ export type InputFieldProps = {
   error?: string | string[] | FormikErrors<any> | Array<FormikErrors<any>>;
   disabled?: boolean;
   callbackOnChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setFieldValue?: (field: string, value: any) => void;
+  setFieldValue: (field: any, value: any) => any;
   pattern?: any;
   children?: React.ReactNode;
   ref?: any;
@@ -35,10 +35,10 @@ const InputField: React.FC<InputFieldProps> = ({
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (pattern) {
       if (e.target.value === '' || pattern.test(e.target.value)) {
-        setFieldValue?.(field.name, e.target.value);
+        setFieldValue(field.name, e.target.value);
       }
     } else {
-      setFieldValue?.(field.name, e.target.value);
+      setFieldValue(field.name, e.target.value);
     }
 
     callbackOnChange?.(e);

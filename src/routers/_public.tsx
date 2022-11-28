@@ -9,6 +9,9 @@ const HomeScreen = React.lazy(
 const AboutScreen = React.lazy(
   async () => await import('src/screens/publicScreens').then(module => ({ default: module.AboutScreen })),
 );
+const LoginScreen = React.lazy(
+  async () => await import('src/screens/publicScreens').then(module => ({ default: module.LoginScreen })),
+);
 
 const NotFoundScreen = React.lazy(
   async () => await import('src/screens/NotFound').then(module => ({ default: module.NotFound })),
@@ -20,9 +23,13 @@ const _publicRoutes: RouteObject[] = [
     children: [
       { path: '/', element: <HomeScreen /> },
       { path: '/about', element: <AboutScreen /> },
-      { element: <NotFoundScreen />, path: '*' },
     ],
   },
+  {
+    element: <LoginScreen />,
+    path: '/login',
+  },
+  { element: <NotFoundScreen />, path: '*' },
 ];
 
 export default _publicRoutes;
