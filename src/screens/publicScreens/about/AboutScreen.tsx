@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const AboutScreen: React.FC = () => {
-  useEffect(() => {
-    console.log('AboutScreen.tsx - useEffect');
-  }, []);
-
   return <>About Screen</>;
 };
 

@@ -33,6 +33,7 @@ const RootRouter: React.FC = () => {
 
   useEffect(() => {
     if (error) {
+      localStorage.removeItem(LOCAL_STORAGE_KEY.TOKEN);
       navigate('/login');
     } else {
       setRoutes([..._publicRoutes, ..._privateRoutes]);

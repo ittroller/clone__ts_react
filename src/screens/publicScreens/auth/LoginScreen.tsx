@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, Col, Form, Layout, Row } from 'antd';
+import { Button, Col, Divider, Form, Layout, Row } from 'antd';
 import styled from 'styled-components';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'src/stores';
+import { useNavigate, Link } from 'react-router-dom';
 
+import { useAppDispatch } from 'src/stores';
 import { InputField } from 'src/components/form';
 import { loginAction } from 'src/stores/screens/auth/auth.action';
 
@@ -81,6 +81,8 @@ const LoginScreen: React.FC = () => {
               Login
             </Button>
           </Form>
+          <Divider />
+          <Link to={'/'}>Go to Home</Link>
         </Col>
         <Col span={8} />
       </Row>
