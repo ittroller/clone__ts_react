@@ -1,33 +1,15 @@
 import React from 'react';
-import { UploadOutlined, UserOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import styled from 'styled-components';
 import { Link, useOutlet } from 'react-router-dom';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 
 const PublicLayout: React.FC = () => {
   const outlet = useOutlet();
 
-  const MENU = [
-    {
-      key: 'HOME',
-      icon: <UploadOutlined />,
-      label: 'HOME',
-    },
-    {
-      key: 'ABOUT',
-      icon: <UserOutlined />,
-      label: 'ABOUT',
-    },
-  ];
-
   return (
     <PublicLayoutStyle>
-      <Sider className="layout-sider" breakpoint="lg" collapsedWidth="0" onBreakpoint={_ => {}} onCollapse={_ => {}}>
-        <div className="logo">LOGO</div>
-        <Menu className="layout-menu" mode="inline" defaultSelectedKeys={['HOME']} items={MENU} />
-      </Sider>
       <Layout className="layout-body">
         <Header className="body-header">
           <Link to={'/login'}>Go to login</Link>
@@ -35,7 +17,7 @@ const PublicLayout: React.FC = () => {
 
         <Content className="body-content">{outlet}</Content>
 
-        <Footer className="body-footer">Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer className="body-footer">MINH.CK</Footer>
       </Layout>
     </PublicLayoutStyle>
   );
