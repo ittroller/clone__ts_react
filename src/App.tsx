@@ -20,7 +20,7 @@ import RootRouter from './routers/Root';
 import './App.less';
 
 const App: React.FC = () => {
-  console.log();
+  console.log('App.tsx');
   return <RootRouter />;
 };
 

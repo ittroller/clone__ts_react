@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 const HomeScreen: React.FC = () => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    console.log('HomeScreen.tsx - useEffect');
+  }, []);
 
   return (
     <>
