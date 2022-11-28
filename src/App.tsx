@@ -1,5 +1,8 @@
 import React from 'react';
 
+/* ROUTER */
+import { BrowserRouter } from 'react-router-dom';
+
 /* I18N */
 import { I18nextProvider } from 'react-i18next';
 import { I18n } from 'src/configs/i18n/i18n';
@@ -17,6 +20,7 @@ import RootRouter from './routers/Root';
 import './App.less';
 
 const App: React.FC = () => {
+  console.log();
   return <RootRouter />;
 };
 
@@ -25,7 +29,9 @@ export const AppConfig: React.FC = () => {
     <Provider store={store}>
       <I18nextProvider i18n={I18n}>
         <React.Suspense fallback={<Suspense />}>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </React.Suspense>
       </I18nextProvider>
     </Provider>
