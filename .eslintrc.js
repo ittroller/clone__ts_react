@@ -16,6 +16,7 @@ module.exports = {
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',
 
+    'no-console': 'warn',
     semi: 'off',
     eqeqeq: 'off',
   },
