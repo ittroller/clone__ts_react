@@ -19,15 +19,13 @@ const NotFoundScreen = React.lazy(
 
 const _publicRoutes: RouteObject[] = [
   {
+    path: '/',
     element: <PublicLayout />,
-    children: [
-      { path: '/', element: <HomeScreen /> },
-      { path: '/about', element: <AboutScreen /> },
-    ],
+    children: [{ element: <HomeScreen /> }, { path: 'about', element: <AboutScreen /> }],
   },
   {
     element: <LoginScreen />,
-    path: '/login',
+    path: 'login',
   },
   { element: <NotFoundScreen />, path: '*' },
 ];
