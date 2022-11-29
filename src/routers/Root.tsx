@@ -14,8 +14,9 @@ import { getMeAction } from 'src/stores/screens/auth/auth.action';
 const RootRouter: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const { isLoading, meInfo, error } = useAppSelector(state => state.auth);
-  const [routes, setRoutes] = useState<RouteObject[]>([]);
+  const [routes, setRoutes] = useState<RouteObject[]>([..._publicRoutes]);
 
   useEffect(() => {
     const initialFunction = async (): Promise<void> => {
