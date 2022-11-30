@@ -14,13 +14,22 @@ import RootRouter from './routers/Root';
 
 import './App.less';
 
+import { Web3ReactProvider, Web3ReactHooks, initializeConnector } from '@web3-react/core';
+import { MetaMask } from '@web3-react/metamask';
+
+export const [metaMask, hooks] = initializeConnector<MetaMask>(actions => new MetaMask({ actions }));
+
+const connectors: Array<[MetaMask, Web3ReactHooks]> = [[metaMask, hooks]];
+
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={I18n}>
         <React.Suspense fallback={<Suspense />}>
           <BrowserRouter>
-            <RootRouter />
+            <Web3ReactProvider connectors={connectors}>
+              <RootRouter />
+            </Web3ReactProvider>
           </BrowserRouter>
         </React.Suspense>
       </I18nextProvider>
