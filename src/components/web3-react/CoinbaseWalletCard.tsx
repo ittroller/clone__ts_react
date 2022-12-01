@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
-import { hooks, metaMask } from 'src/configs/web3-react/connectors/metamask';
+import { coinbaseWallet, hooks } from 'src/configs/web3-react/connectors/coinbaseWallet';
 import CardComponent from './partials/Card';
 
 const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks;
 
-export default function MetaMaskCard(): React.ReactElement {
+export default function CoinbaseWalletCard(): React.ReactElement {
   const chainId = useChainId();
   const accounts = useAccounts();
   const isActivating = useIsActivating();
@@ -19,15 +18,15 @@ export default function MetaMaskCard(): React.ReactElement {
 
   // attempt to connect eagerly on mount
   useEffect(() => {
-    void metaMask.connectEagerly().catch(() => {
+    void coinbaseWallet.connectEagerly().catch(() => {
       // eslint-disable-next-line no-console
-      console.debug('Failed to connect eagerly to metamask');
+      console.debug('Failed to connect eagerly to coinbase wallet');
     });
   }, []);
 
   return (
     <CardComponent
-      connector={metaMask}
+      connector={coinbaseWallet}
       chainId={chainId}
       isActivating={isActivating}
       isActive={isActive}

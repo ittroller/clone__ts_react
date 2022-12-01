@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
-import { hooks, metaMask } from 'src/configs/web3-react/connectors/metamask';
+import { hooks, network } from 'src/configs/web3-react/connectors/network';
 import CardComponent from './partials/Card';
 
 const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks;
 
-export default function MetaMaskCard(): React.ReactElement {
+export default function NetworkCard(): React.ReactElement {
   const chainId = useChainId();
   const accounts = useAccounts();
   const isActivating = useIsActivating();
@@ -19,15 +18,15 @@ export default function MetaMaskCard(): React.ReactElement {
 
   // attempt to connect eagerly on mount
   useEffect(() => {
-    void metaMask.connectEagerly().catch(() => {
+    void network.activate().catch(() => {
       // eslint-disable-next-line no-console
-      console.debug('Failed to connect eagerly to metamask');
+      console.debug('Failed to connect to network');
     });
   }, []);
 
   return (
     <CardComponent
-      connector={metaMask}
+      connector={network}
       chainId={chainId}
       isActivating={isActivating}
       isActive={isActive}

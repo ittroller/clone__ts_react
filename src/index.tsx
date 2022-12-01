@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Buffer } from 'buffer';
+
 import reportWebVitals from './reportWebVitals';
 
 import App from './App';
+
+window.Buffer = window.Buffer || Buffer;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);

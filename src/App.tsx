@@ -14,12 +14,8 @@ import RootRouter from './routers/Root';
 
 import './App.less';
 
-import { Web3ReactProvider, Web3ReactHooks, initializeConnector } from '@web3-react/core';
-import { MetaMask } from '@web3-react/metamask';
-
-export const [metaMask, hooks] = initializeConnector<MetaMask>(actions => new MetaMask({ actions }));
-
-const connectors: Array<[MetaMask, Web3ReactHooks]> = [[metaMask, hooks]];
+import { Web3ReactProvider } from '@web3-react/core';
+import { connectors } from './configs/web3-react';
 
 const App: React.FC = () => {
   return (

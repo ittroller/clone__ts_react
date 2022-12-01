@@ -44,10 +44,12 @@ export function Accounts({
   const renderFunction = (): React.ReactNode => {
     if (accounts.length) {
       return accounts?.map((account, i) => (
-        <ul key={account} style={{ margin: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          {ENSNames?.[i] ?? account}
-          {balances?.[i] ? ` (Ξ${formatEther(balances[i])})` : null}
-        </ul>
+        <React.Fragment key={account}>
+          <p style={{ margin: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            Wallet address: {ENSNames?.[i] ?? account}
+          </p>
+          <p>Balances: {balances?.[i] ? ` (Ξ${formatEther(balances[i])})` : null}</p>
+        </React.Fragment>
       ));
     }
 

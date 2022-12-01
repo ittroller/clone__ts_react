@@ -1,14 +1,19 @@
 import React from 'react';
 import { Web3ReactHooks } from '@web3-react/core';
 import { MetaMask } from '@web3-react/metamask';
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
+import { Network } from '@web3-react/network';
+import { WalletConnect } from '@web3-react/walletconnect';
+
 import { Accounts } from './Accounts';
 import { Chain } from './Chain';
 import { ConnectWithSelect } from './ConnectWithSelect';
 import { Status } from './Status';
 import { getName } from 'src/utils';
+import { Card } from 'antd';
 
 interface Props {
-  connector: MetaMask;
+  connector: MetaMask | WalletConnect | CoinbaseWallet | Network;
   chainId: ReturnType<Web3ReactHooks['useChainId']>;
   isActivating: ReturnType<Web3ReactHooks['useIsActivating']>;
   isActive: ReturnType<Web3ReactHooks['useIsActive']>;
@@ -19,7 +24,7 @@ interface Props {
   accounts?: string[];
 }
 
-export function Card({
+export default function CardComponent({
   connector,
   chainId,
   isActivating,
@@ -31,20 +36,7 @@ export function Card({
   provider,
 }: Props): any {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        width: '20rem',
-        padding: '1rem',
-        margin: '1rem',
-        overflow: 'auto',
-        border: '1px solid',
-        borderRadius: '1rem',
-      }}
-    >
-      <b>{getName(connector) as string}</b>
+    <Card style={{ width: '100%' }} title={<b>{getName(connector) as string}</b>}>
       <div style={{ marginBottom: '1rem' }}>
         <Status isActivating={isActivating} isActive={isActive} error={error} />
       </div>
@@ -60,6 +52,6 @@ export function Card({
         error={error}
         setError={setError}
       />
-    </div>
+    </Card>
   );
 }

@@ -2,7 +2,11 @@ import React, { useCallback, useState } from 'react';
 import type { Web3ReactHooks } from '@web3-react/core';
 import type { MetaMask } from '@web3-react/metamask';
 import { Network } from '@web3-react/network';
+import { WalletConnect } from '@web3-react/walletconnect';
+import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
+
 import { CHAINS, getAddChainParameters, URLS } from 'src/utils';
+import { Button, Select } from 'antd';
 
 function ChainSelect({
   chainId,
@@ -15,21 +19,27 @@ function ChainSelect({
   displayDefault: boolean;
   chainIds: number[];
 }): any {
+  const chainListOptions =
+    chainIds.map(chainId => {
+      return { value: chainId, label: CHAINS[chainId]?.name ?? chainId };
+    }) || [];
+
+  const options: Array<{
+    value: number | string | string[] | number[];
+    label: string;
+  }> = displayDefault ? [{ value: -1, label: 'Default Chain' }, ...chainListOptions] : chainListOptions;
+
   return (
-    <select
-      value={chainId}
-      onChange={event => {
-        switchChain?.(Number(event.target.value));
-      }}
-      disabled={switchChain === undefined}
-    >
-      {displayDefault ? <option value={-1}>Default Chain</option> : null}
-      {chainIds.map(chainId => (
-        <option key={chainId} value={chainId}>
-          {CHAINS[chainId]?.name ?? chainId}
-        </option>
-      ))}
-    </select>
+    <>
+      <Select
+        value={chainId}
+        disabled={switchChain === undefined}
+        options={options}
+        onChange={val => {
+          switchChain?.(Number(val));
+        }}
+      />
+    </>
   );
 }
 
@@ -41,7 +51,7 @@ export function ConnectWithSelect({
   error,
   setError,
 }: {
-  connector: MetaMask;
+  connector: MetaMask | WalletConnect | CoinbaseWallet | Network;
   chainId: ReturnType<Web3ReactHooks['useChainId']>;
   isActivating: ReturnType<Web3ReactHooks['useIsActivating']>;
   isActive: ReturnType<Web3ReactHooks['useIsActive']>;
@@ -69,28 +79,50 @@ export function ConnectWithSelect({
         return;
       }
 
-      connector
-        .activate(desiredChainId === -1 ? undefined : getAddChainParameters(desiredChainId))
-        .then(() => setError(undefined))
-        .catch(setError);
+      if (connector instanceof WalletConnect || connector instanceof Network) {
+        connector
+          .activate(desiredChainId === -1 ? undefined : desiredChainId)
+          .then(() => setError(undefined))
+          .catch(err => {
+            setError(err);
+          });
+      } else {
+        connector
+          .activate(desiredChainId === -1 ? undefined : getAddChainParameters(desiredChainId))
+          .then(() => setError(undefined))
+          .catch(setError);
+      }
     },
     [connector, chainId, setError],
   );
 
   const onClick = useCallback((): void => {
     setError(undefined);
-
-    connector
-      .activate(desiredChainId === -1 ? undefined : getAddChainParameters(desiredChainId))
-      .then(() => setError(undefined))
-      .catch(setError);
+    if (connector instanceof WalletConnect || connector instanceof Network) {
+      connector
+        .activate(desiredChainId === -1 ? undefined : desiredChainId)
+        .then(() => setError(undefined))
+        .catch(setError);
+    } else {
+      connector
+        .activate(desiredChainId === -1 ? undefined : getAddChainParameters(desiredChainId))
+        .then(() => setError(undefined))
+        .catch(setError);
+    }
   }, [connector, desiredChainId, setError]);
 
   const clickConnect = (): void => {
-    connector
-      .activate(desiredChainId === -1 ? undefined : getAddChainParameters(desiredChainId))
-      .then(() => setError(undefined))
-      .catch(setError);
+    if (connector instanceof WalletConnect || connector instanceof Network) {
+      connector
+        .activate(desiredChainId === -1 ? undefined : desiredChainId)
+        .then(() => setError(undefined))
+        .catch(setError);
+    } else {
+      connector
+        .activate(desiredChainId === -1 ? undefined : getAddChainParameters(desiredChainId))
+        .then(() => setError(undefined))
+        .catch(setError);
+    }
   };
 
   if (error) {
@@ -103,7 +135,9 @@ export function ConnectWithSelect({
           chainIds={chainIds}
         />
         <div style={{ marginBottom: '1rem' }} />
-        <button onClick={onClick}>Try Again?</button>
+        <Button type="primary" danger onClick={onClick}>
+          Try Again?
+        </Button>
       </div>
     );
   } else if (isActive) {
@@ -116,7 +150,8 @@ export function ConnectWithSelect({
           chainIds={chainIds}
         />
         <div style={{ marginBottom: '1rem' }} />
-        <button
+        <Button
+          type="primary"
           onClick={() => {
             if (connector?.deactivate) {
               void connector.deactivate();
@@ -126,7 +161,7 @@ export function ConnectWithSelect({
           }}
         >
           Disconnect
-        </button>
+        </Button>
       </div>
     );
   } else {
@@ -140,9 +175,9 @@ export function ConnectWithSelect({
         />
 
         <div style={{ marginBottom: '1rem' }} />
-        <button onClick={clickConnect} disabled={isActivating}>
+        <Button type="ghost" onClick={clickConnect} disabled={isActivating}>
           Connect
-        </button>
+        </Button>
       </div>
     );
   }
