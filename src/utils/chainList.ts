@@ -61,42 +61,32 @@ export function getAddChainParameters(chainId: number): AddEthereumChainParamete
   }
 }
 
+const getUrlFromKey = (url: string): string => {
+  if (url) {
+    return `${url}${process.env.REACT_APP_RPC_INFURA_KEY}`;
+  }
+  return '';
+};
+
 export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainInformation } = {
   1: {
-    urls: [
-      process.env.REACT_APP_RPC_INFURA_KEY
-        ? `https://mainnet.infura.io/v3/${process.env.REACT_APP_RPC_INFURA_KEY}`
-        : '',
-      'https://cloudflare-eth.com',
-    ].filter(url => url !== ''),
+    urls: [getUrlFromKey('https://mainnet.infura.io/v3/'), 'https://cloudflare-eth.com'].filter(url => url !== ''),
     name: 'Mainnet',
   },
   3: {
-    urls: [
-      process.env.REACT_APP_RPC_INFURA_KEY
-        ? `https://ropsten.infura.io/v3/${process.env.REACT_APP_RPC_INFURA_KEY}`
-        : '',
-    ].filter(url => url !== ''),
+    urls: [getUrlFromKey('https://ropsten.infura.io/v3/')].filter(url => url !== ''),
     name: 'Ropsten',
   },
   4: {
-    urls: [
-      process.env.REACT_APP_RPC_INFURA_KEY
-        ? `https://rinkeby.infura.io/v3/${process.env.REACT_APP_RPC_INFURA_KEY}`
-        : '',
-    ].filter(url => url !== ''),
+    urls: [getUrlFromKey('https://rinkeby.infura.io/v3/')].filter(url => url !== ''),
     name: 'Rinkeby',
   },
   5: {
-    urls: [
-      process.env.REACT_APP_RPC_INFURA_KEY ? `https://goerli.infura.io/v3/${process.env.REACT_APP_RPC_INFURA_KEY}` : '',
-    ].filter(url => url !== ''),
+    urls: [getUrlFromKey('https://goerli.infura.io/v3/')].filter(url => url !== ''),
     name: 'Görli',
   },
   42: {
-    urls: [
-      process.env.REACT_APP_RPC_INFURA_KEY ? `https://kovan.infura.io/v3/${process.env.REACT_APP_RPC_INFURA_KEY}` : '',
-    ].filter(url => url !== ''),
+    urls: [getUrlFromKey('https://kovan.infura.io/v3/')].filter(url => url !== ''),
     name: 'Kovan',
   },
   // Optimism
@@ -112,9 +102,7 @@ export const CHAINS: { [chainId: number]: BasicChainInformation | ExtendedChainI
   //   blockExplorerUrls: ['https://optimistic.etherscan.io'],
   // },
   69: {
-    urls: [
-      process.env.REACT_APP_RPC_INFURA_KEY ? `https://kovan.infura.io/v3/${process.env.REACT_APP_RPC_INFURA_KEY}` : '',
-    ].filter(url => url !== ''),
+    urls: [getUrlFromKey('https://kovan.infura.io/v3/')].filter(url => url !== ''),
     name: 'Optimism Kovan',
     nativeCurrency: ETH,
     blockExplorerUrls: ['https://kovan.etherscan.io'],

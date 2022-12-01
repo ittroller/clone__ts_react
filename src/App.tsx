@@ -12,10 +12,11 @@ import { Suspense } from './components';
 
 import RootRouter from './routers/Root';
 
-import './App.less';
-
 import { Web3ReactProvider } from '@web3-react/core';
-import { connectors } from './configs/web3-react';
+import { connectors } from 'src/configs/web3-react';
+import { Web3ContextProvider } from 'src/contexts/web3/web3';
+
+import './App.less';
 
 const App: React.FC = () => {
   return (
@@ -24,7 +25,9 @@ const App: React.FC = () => {
         <React.Suspense fallback={<Suspense />}>
           <BrowserRouter>
             <Web3ReactProvider connectors={connectors}>
-              <RootRouter />
+              <Web3ContextProvider>
+                <RootRouter />
+              </Web3ContextProvider>
             </Web3ReactProvider>
           </BrowserRouter>
         </React.Suspense>
