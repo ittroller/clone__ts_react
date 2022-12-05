@@ -1,14 +1,18 @@
 import React, { useMemo } from 'react';
 import { UploadOutlined, UserOutlined } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Avatar, Dropdown, Layout, Menu, Space } from 'antd';
 import styled from 'styled-components';
 import { Link, useLocation, useOutlet } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useWeb3Auth } from 'src/contexts/web3auth/Web3Auth';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const PrivateLayout: React.FC = () => {
   const outlet = useOutlet();
   const location = useLocation();
+  const { t } = useTranslation();
+  const { logout } = useWeb3Auth();
 
   const MENU = [
     {
@@ -43,7 +47,34 @@ const PrivateLayout: React.FC = () => {
       </Sider>
       <Layout className="layout-body">
         <Header className="body-header">
-          <Link to={'/login'}>Go to login</Link>
+          <Dropdown
+            menu={{
+              items: [
+                { label: <Link to="/">{t('global.go_to_home')}</Link>, key: '0' },
+                { type: 'divider' },
+                {
+                  label: (
+                    <Link
+                      onClick={() => {
+                        void logout();
+                      }}
+                      to="#"
+                    >
+                      Logout
+                    </Link>
+                  ),
+                  key: '1',
+                },
+              ],
+            }}
+            trigger={['click']}
+          >
+            <a onClick={e => e.preventDefault()}>
+              <Space>
+                <Avatar className="icon-login" icon={<UserOutlined />} />
+              </Space>
+            </a>
+          </Dropdown>
         </Header>
 
         <Content className="body-content">{outlet}</Content>

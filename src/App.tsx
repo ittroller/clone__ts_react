@@ -12,6 +12,8 @@ import { Suspense } from './components';
 
 import RootRouter from './routers/Root';
 
+import Web3AuthProvider from 'src/contexts/web3auth/Web3Auth';
+
 import './App.less';
 
 const App: React.FC = () => {
@@ -20,7 +22,9 @@ const App: React.FC = () => {
       <I18nextProvider i18n={I18n}>
         <React.Suspense fallback={<Suspense />}>
           <BrowserRouter>
-            <RootRouter />
+            <Web3AuthProvider>
+              <RootRouter />
+            </Web3AuthProvider>
           </BrowserRouter>
         </React.Suspense>
       </I18nextProvider>
