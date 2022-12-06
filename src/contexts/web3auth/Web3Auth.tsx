@@ -49,18 +49,6 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
   });
   const navigate = useNavigate();
 
-  const setWalletProvider = useCallback(
-    (web3authProvider: SafeEventEmitterProvider) => {
-      const walletProvider = getWalletProvider(web3authProvider);
-
-      setProvider({
-        instance: walletProvider,
-        loading: false,
-      });
-    },
-    [chain],
-  );
-
   useEffect(() => {
     const subscribeAuthEvents = (web3auth: Web3Auth): void => {
       web3auth.on(ADAPTER_EVENTS.ADAPTER_DATA_UPDATED, (data: unknown) => {
@@ -82,7 +70,11 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
         void message.destroy();
         void message.success('Connected');
 
-        setWalletProvider(web3auth?.provider as SafeEventEmitterProvider);
+        const currentProvider: Web3AuthCustom.IWalletProvider = getWalletProvider(
+          web3auth?.provider as SafeEventEmitterProvider,
+        );
+
+        setProvider({ instance: currentProvider, loading: false });
         setWeb3(new Web3(web3auth?.provider as providerWeb3Core));
       });
 
@@ -114,7 +106,6 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
           clientId,
           storageKey: 'session',
         });
-
         subscribeAuthEvents(web3AuthInstance);
 
         const adapter = new OpenloginAdapter({
@@ -132,7 +123,6 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
         });
 
         await setWeb3Auth(web3AuthInstance);
-        await setProvider({ ...provider, loading: false });
       } catch (error: any) {
         if (error?.message && error?.message instanceof Web3AuthError) {
           void message.destroy();
@@ -143,9 +133,8 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
       }
     }
 
-    setProvider({ ...provider, loading: true });
     void init();
-  }, [chain, web3AuthNetwork, setWalletProvider]);
+  }, [chain, web3AuthNetwork]);
 
   const login = async (
     adapter: WALLET_ADAPTER_TYPE,
@@ -166,7 +155,8 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
           throw err;
         });
 
-      await setWalletProvider(provider as SafeEventEmitterProvider);
+      const currentProvider: Web3AuthCustom.IWalletProvider = getWalletProvider(provider as SafeEventEmitterProvider);
+      setProvider({ instance: currentProvider, loading: false });
 
       navigate('/dashboard');
     } catch (error) {
