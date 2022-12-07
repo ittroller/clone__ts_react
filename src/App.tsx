@@ -20,13 +20,13 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={I18n}>
-        <React.Suspense fallback={<Suspense />}>
-          <BrowserRouter>
+        <BrowserRouter>
+          <React.Suspense fallback={<Suspense />}>
             <Web3AuthProvider>
               <RootRouter />
             </Web3AuthProvider>
-          </BrowserRouter>
-        </React.Suspense>
+          </React.Suspense>
+        </BrowserRouter>
       </I18nextProvider>
     </Provider>
   );

@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { ADAPTER_EVENTS, SafeEventEmitterProvider, WALLET_ADAPTER_TYPE, Web3AuthError } from '@web3auth/base';
 import { useNavigate } from 'react-router-dom';
 import { Web3Auth } from '@web3auth/web3auth';
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter';
 import Web3 from 'web3';
 import { provider as providerWeb3Core } from 'web3-core';
-import { message } from 'antd';
+import { message, Spin } from 'antd';
 
 import { CHAIN_CONFIG, getWalletProvider } from 'src/configs/web3auth';
+import _publicRoutes from 'src/routers/_public';
+import _privateRoutes from 'src/routers/_private';
 // import { useAppDispatch } from 'src/stores';
 // import actions from 'src/stores/common/web3auth/web3auth.reducer';
 
@@ -26,6 +28,7 @@ export const Web3AuthContext = createContext<Web3AuthCustom.Context>({
   getBalance: async () => {},
   getPrivateKey: async () => {},
   getBlock: async () => {},
+  routers: [],
 });
 
 export function useWeb3Auth(): Web3AuthCustom.Context {
@@ -49,6 +52,15 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
   });
   const navigate = useNavigate();
 
+  const setWalletProvider = useCallback(
+    (web3authProvider: SafeEventEmitterProvider) => {
+      const walletProvider = getWalletProvider(web3authProvider);
+
+      setProvider({ instance: walletProvider, loading: false });
+    },
+    [chain],
+  );
+
   useEffect(() => {
     const subscribeAuthEvents = (web3auth: Web3Auth): void => {
       web3auth.on(ADAPTER_EVENTS.ADAPTER_DATA_UPDATED, (data: unknown) => {
@@ -70,11 +82,7 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
         void message.destroy();
         void message.success('Connected');
 
-        const currentProvider: Web3AuthCustom.IWalletProvider = getWalletProvider(
-          web3auth?.provider as SafeEventEmitterProvider,
-        );
-
-        setProvider({ instance: currentProvider, loading: false });
+        setWalletProvider(web3auth?.provider as SafeEventEmitterProvider);
         setWeb3(new Web3(web3auth?.provider as providerWeb3Core));
       });
 
@@ -106,6 +114,7 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
           clientId,
           storageKey: 'session',
         });
+
         subscribeAuthEvents(web3AuthInstance);
 
         const adapter = new OpenloginAdapter({
@@ -123,18 +132,26 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
         });
 
         await setWeb3Auth(web3AuthInstance);
-      } catch (error: any) {
-        if (error?.message && error?.message instanceof Web3AuthError) {
-          void message.destroy();
-          void message.error(error?.message);
 
-          await setProvider({ ...provider, loading: false });
+        if (!web3AuthInstance.provider) {
+          throw Error('Not get web3auth provider.');
         }
+      } catch (error: any) {
+        await setProvider({ ...provider, loading: false });
       }
     }
 
     void init();
   }, [chain, web3AuthNetwork]);
+
+  const routers = useMemo(() => {
+    if (provider.instance) {
+      const newPublicRoutes = _publicRoutes.filter(item => item.path !== 'login');
+      return [...newPublicRoutes, ..._privateRoutes];
+    }
+
+    return [..._publicRoutes];
+  }, [provider.instance]);
 
   const login = async (
     adapter: WALLET_ADAPTER_TYPE,
@@ -251,9 +268,16 @@ const Web3AuthProvider: React.FC<Web3AuthCustom.Provider> = ({ children }: Web3A
     getBalance,
     getPrivateKey,
     getBlock,
+    routers,
   };
 
-  return <Web3AuthContext.Provider value={contextProvider}>{children}</Web3AuthContext.Provider>;
+  return (
+    <Web3AuthContext.Provider value={contextProvider}>
+      <Spin wrapperClassName="root-spin" spinning={provider.loading}>
+        {children}
+      </Spin>
+    </Web3AuthContext.Provider>
+  );
 };
 
 export default Web3AuthProvider;

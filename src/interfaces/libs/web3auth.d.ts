@@ -36,6 +36,7 @@ declare namespace Web3AuthCustom {
     getBalance: () => Promise<any>;
     getPrivateKey: () => Promise<any>;
     getBlock: (timestamp: string) => Promise<any>;
+    routers: Array<import('react-router-dom').RouteObject>;
   }
 
   export interface Provider {
