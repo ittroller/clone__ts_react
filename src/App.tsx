@@ -18,11 +18,11 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={I18n}>
-        <React.Suspense fallback={<Suspense />}>
-          <BrowserRouter>
+        <BrowserRouter>
+          <React.Suspense fallback={<Suspense />}>
             <RootRouter />
-          </BrowserRouter>
-        </React.Suspense>
+          </React.Suspense>
+        </BrowserRouter>
       </I18nextProvider>
     </Provider>
   );
