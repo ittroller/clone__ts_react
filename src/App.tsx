@@ -10,21 +10,19 @@ import { store } from 'src/stores';
 
 import { Suspense } from './components';
 
-import RootRouter from './routers/Root';
+// import RootRouter from './routers/Root';
+import RootRouter from './routers/RootComponent';
 
 import './App.less';
-import { AuthProvider } from './contexts/routers/AuthContext';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={I18n}>
         <BrowserRouter>
-          <AuthProvider>
-            <React.Suspense fallback={<Suspense />}>
-              <RootRouter />
-            </React.Suspense>
-          </AuthProvider>
+          <React.Suspense fallback={<Suspense />}>
+            <RootRouter />
+          </React.Suspense>
         </BrowserRouter>
       </I18nextProvider>
     </Provider>

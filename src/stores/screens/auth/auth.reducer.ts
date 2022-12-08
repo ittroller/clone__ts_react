@@ -29,6 +29,7 @@ const { actions, reducer } = createSlice({
       })
       .addCase(getMeAction.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.meInfo = action.payload;
       })
       .addCase(getMeAction.rejected, (state, action) => {
         state.isLoading = false;
