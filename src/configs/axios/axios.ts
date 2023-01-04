@@ -6,9 +6,9 @@ export class AxiosClient {
 
   token: string = localStorage.getItem(LOCAL_STORAGE_KEY.TOKEN) ?? '';
 
-  constructor(baseURL: string) {
+  constructor() {
     this.instance = axios.create({
-      baseURL,
+      baseURL: `${process.env.REACT_APP_API_URL}${process.env.REACT_APP_VERSION}`,
       headers: {
         Authorization: this.getToken(),
       },

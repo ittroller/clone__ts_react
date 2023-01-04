@@ -10,10 +10,11 @@ export const loginAction = createAsyncThunk<any, Auth.LoginRequestPayload>(
       const user = await AUTH_API.loginAPI(data);
 
       if (user?.token && user?.refresh_token) {
-        localStorage.setItem(LOCAL_STORAGE_KEY.TOKEN, user.token);
-        localStorage.setItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN, user.refresh_token);
+        await localStorage.setItem(LOCAL_STORAGE_KEY.TOKEN, user.token);
+        await localStorage.setItem(LOCAL_STORAGE_KEY.REFRESH_TOKEN, user.refresh_token);
 
         await dispatch(getMeAction());
+
         callback();
       }
 

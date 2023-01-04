@@ -1,6 +1,7 @@
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
 
+import { ProtectedRoutes } from 'src/contexts/auth/AuthContext';
 import { PrivateLayout } from 'src/layouts';
 
 const DashboardScreen = React.lazy(
@@ -10,17 +11,16 @@ const AccountScreen = React.lazy(
   async () => await import('src/screens/privateScreens').then(module => ({ default: module.AccountScreen })),
 );
 
-const NotFoundScreen = React.lazy(
-  async () => await import('src/screens/NotFound').then(module => ({ default: module.NotFound })),
-);
-
 const _privateRoutes: RouteObject[] = [
   {
-    element: <PrivateLayout />,
+    element: (
+      <ProtectedRoutes>
+        <PrivateLayout />
+      </ProtectedRoutes>
+    ),
     children: [
       { path: '/dashboard', element: <DashboardScreen /> },
       { path: '/account', element: <AccountScreen /> },
-      { element: <NotFoundScreen />, path: '*' },
     ],
   },
 ];
