@@ -10,8 +10,7 @@ import { store } from 'src/stores';
 
 import { Suspense } from './components';
 
-// import RootRouter from './routers/Root';
-import RootRouter from './routers/RootComponent';
+import RootRouter from './routers/Root';
 
 import './App.less';
 
