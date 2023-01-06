@@ -3,7 +3,7 @@ import { Spin } from 'antd';
 import { Navigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'src/stores';
-import { LOCAL_STORAGE_KEY } from 'src/constants';
+import { LOCAL_STORAGE_KEY, ROUTER_PATH } from 'src/constants';
 import { getMeAction } from 'src/stores/screens/auth/auth.action';
 
 interface IAuthContext {
@@ -45,7 +45,15 @@ export const ProtectedRoutes: React.FC<{ children: React.ReactNode }> = ({ child
 
   return (
     <Spin wrapperClassName="root-spin" spinning={isLoading}>
-      {localToken ? meInfo ? children : error ? <Navigate to="/login" /> : null : <Navigate to="/login" />}
+      {localToken ? (
+        meInfo ? (
+          children
+        ) : error ? (
+          <Navigate to={ROUTER_PATH.LOGIN.PATH} replace={true} />
+        ) : null
+      ) : (
+        <Navigate to={ROUTER_PATH.LOGIN.PATH} replace={true} />
+      )}
     </Spin>
   );
 };
@@ -55,7 +63,7 @@ export const PublishedRoutes: React.FC<{ children: React.ReactNode }> = ({ child
 
   return (
     <Spin wrapperClassName="root-spin" spinning={isLoading}>
-      {meInfo ? <Navigate to="/dashboard" /> : children}
+      {meInfo ? <Navigate to={ROUTER_PATH.DASHBOARD.PATH} replace={true} /> : children}
     </Spin>
   );
 };
