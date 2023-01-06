@@ -1,9 +1,10 @@
 import React from 'react';
 import { DatePicker, Form } from 'antd';
 import { FormItemProps } from 'antd/lib/form';
-import { DatePickerProps } from 'antd/lib/date-picker';
 import { FieldInputProps, FormikErrors, FormikTouched } from 'formik';
-import moment, { Moment } from 'moment-timezone';
+import type { Dayjs } from 'dayjs';
+import type { DatePickerProps } from 'antd';
+import dayjs from 'dayjs';
 
 type Props = {
   label?: string;
@@ -31,12 +32,12 @@ const DatepickerField: React.FC<Props> = ({
   callBackOnChange,
   ...rest
 }) => {
-  const onChange = (_: Moment | null, dateString: string): void => {
+  const onChange: DatePickerProps['onChange'] = (_: Dayjs | null, dateString: string) => {
     setFieldValue(field.name, dateString);
     callBackOnChange?.();
   };
 
-  const valueMoment = field.value ? moment(field.value) : undefined;
+  const valueMoment = field.value ? dayjs(field.value) : undefined;
 
   return (
     <Form.Item
