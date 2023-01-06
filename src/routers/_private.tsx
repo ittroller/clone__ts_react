@@ -1,8 +1,10 @@
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
 
+import LayoutCard from 'src/layouts/private/LayoutCard';
+
 import { ProtectedRoutes } from 'src/contexts/auth/AuthContext';
-import { PrivateLayout } from 'src/layouts';
+import { ROUTER_PATH } from 'src/constants';
 
 const DashboardScreen = React.lazy(
   async () => await import('src/screens/privateScreens').then(module => ({ default: module.DashboardScreen })),
@@ -15,12 +17,12 @@ const _privateRoutes: RouteObject[] = [
   {
     element: (
       <ProtectedRoutes>
-        <PrivateLayout />
+        <LayoutCard />
       </ProtectedRoutes>
     ),
     children: [
-      { path: '/dashboard', element: <DashboardScreen /> },
-      { path: '/account', element: <AccountScreen /> },
+      { path: ROUTER_PATH.DASHBOARD.PATH, element: <DashboardScreen /> },
+      { path: ROUTER_PATH.ACCOUNT.PATH, element: <AccountScreen /> },
     ],
   },
 ];

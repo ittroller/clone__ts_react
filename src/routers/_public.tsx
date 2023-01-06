@@ -1,8 +1,10 @@
 import React from 'react';
 import type { RouteObject } from 'react-router-dom';
-import { PublishedRoutes } from 'src/contexts/auth/AuthContext';
 
-import { PublicLayout } from 'src/layouts';
+import LayoutCard from 'src/layouts/public/LayoutCard';
+
+import { PublishedRoutes } from 'src/contexts/auth/AuthContext';
+import { ROUTER_PATH } from 'src/constants';
 
 const HomeScreen = React.lazy(
   async () => await import('src/screens/publicScreens').then(module => ({ default: module.HomeScreen })),
@@ -15,13 +17,13 @@ const _publicRoutes: RouteObject[] = [
   {
     element: (
       <PublishedRoutes>
-        <PublicLayout />
+        <LayoutCard />
       </PublishedRoutes>
     ),
 
     children: [
-      { path: '/', element: <HomeScreen /> },
-      { path: '/about', element: <AboutScreen /> },
+      { path: ROUTER_PATH.HOME.PATH, element: <HomeScreen /> },
+      { path: ROUTER_PATH.ABOUT.PATH, element: <AboutScreen /> },
     ],
   },
 ];

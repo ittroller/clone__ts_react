@@ -1,17 +1,17 @@
 {
   "loading": "Loading",
 
-  "header_search": "Search...",
-  "go_to_login": "Go to login",
-  "go_to_register": "Go to register",
-  "go_to_home": "Go to home",
-  "go_to_dashboard": "Go to dashboard",
-  "logout": "Logout",
+  "private": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "account": "Account"
+    },
 
-  "menu_home": "Home",
-  "menu_guide": "Guide",
-  "menu_about": "About Us",
-  "menu_blogs": "Blogs",
-  "menu_dashboard": "Dashboard",
-  "menu_account": "Account"
+    "goto_my_page": "Go to my page"
+  },
+
+  "public": {
+    "go_to_login": "Đến trang đăng nhập",
+    "go_to_register": "Đến trang đăng ký"
+  }
 }
