@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { changeLanguage } from 'src/stores/app/i18n/i18n.action';
+import { changeLanguageAction } from 'src/stores/app/i18n/i18n.action';
 import { RootState, useAppDispatch, useAppSelector } from 'src/stores';
 import { LANGUAGE, LOCAL_STORAGE_KEY } from 'src/constants';
 
@@ -11,6 +11,7 @@ interface IUseLanguage {
 
 const useLanguage = (): IUseLanguage => {
   const language = useAppSelector((state: RootState) => state.app.i18n.language);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const useLanguage = (): IUseLanguage => {
       lang = localStorage.getItem(LOCAL_STORAGE_KEY.LANGUAGE) ?? LANGUAGE.EN;
     }
 
-    await dispatch(changeLanguage(lang));
+    await dispatch(changeLanguageAction(lang));
     localStorage.setItem(LOCAL_STORAGE_KEY.LANGUAGE, lang);
   };
   return { language, switchLanguage };

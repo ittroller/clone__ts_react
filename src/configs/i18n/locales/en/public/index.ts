@@ -1,3 +1,3 @@
-import home_page from './homePage/homePage.json';
+import homePage from './homePage/homePage.json';
 
-export { home_page };
+export { homePage };

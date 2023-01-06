@@ -13,16 +13,22 @@ import { Suspense } from './components';
 import RootRouter from './routers/Root';
 
 import './App.less';
+import './configs/theme/light.less';
+import './configs/theme/dark.less';
+
+import { ThemeProvider } from './contexts/theme/ThemeContext';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <I18nextProvider i18n={I18n}>
-        <BrowserRouter>
-          <React.Suspense fallback={<Suspense />}>
-            <RootRouter />
-          </React.Suspense>
-        </BrowserRouter>
+        <ThemeProvider>
+          <BrowserRouter>
+            <React.Suspense fallback={<Suspense />}>
+              <RootRouter />
+            </React.Suspense>
+          </BrowserRouter>
+        </ThemeProvider>
       </I18nextProvider>
     </Provider>
   );

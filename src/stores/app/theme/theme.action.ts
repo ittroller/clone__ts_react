@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { I18n } from 'src/configs/i18n/i18n';
+import { LOCAL_STORAGE_KEY } from 'src/constants';
 
-export const changeLanguageAction = createAsyncThunk<any, string>(
-  'i18n_action',
+export const changeThemeAction = createAsyncThunk<any, string>(
+  'theme_action',
   async (payload, { dispatch, rejectWithValue }) => {
     try {
-      void I18n.changeLanguage(payload);
+      localStorage.setItem(LOCAL_STORAGE_KEY.THEME, payload);
+
       return payload;
     } catch (err: any) {
       return rejectWithValue(err.response.data);

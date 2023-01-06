@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import AUTH_API from './auth.api';
 import { LOCAL_STORAGE_KEY } from 'src/constants';
 
-export const loginAction = createAsyncThunk<any, Auth.LoginRequestPayload>(
+export const loginAction = createAsyncThunk<any, ILogin.ActionPayload>(
   'auth',
   async ({ data, callback = () => {} }, { dispatch, rejectWithValue }) => {
     try {
@@ -20,7 +20,7 @@ export const loginAction = createAsyncThunk<any, Auth.LoginRequestPayload>(
 
       return user;
     } catch (err: any) {
-      rejectWithValue(err?.response?.data || err?.name);
+      return rejectWithValue(err?.response?.data || err?.name);
     }
   },
 );

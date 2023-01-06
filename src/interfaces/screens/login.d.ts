@@ -1,16 +1,16 @@
-declare namespace Auth {
-  export interface LoginState {
+declare namespace ILogin {
+  export interface Reducer {
     isLoading: boolean;
     error: any;
     meInfo: MeInfo | null;
   }
 
-  export interface LoginRequestData {
+  export interface Payload {
     email: string;
     password: string;
   }
 
-  export interface LoginRequestPayload {
+  export interface ActionPayload {
     data: LoginRequestData;
     callback?: () => void;
   }
