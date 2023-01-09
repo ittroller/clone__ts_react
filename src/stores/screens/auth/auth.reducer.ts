@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { loginAction, getMeAction } from './auth.action';
 
-const initialState: Auth.LoginState = {
+const initialState: ILogin.Reducer = {
   isLoading: false,
   error: null,
   meInfo: null,

@@ -1,0 +1,16 @@
+.dark {
+  @import '~antd/dist/antd.dark.less';
+
+  @layout-header-background: #161b22;
+  @layout-body-background: #0d1117;
+  @component-background: @layout-header-background;
+  @select-background: @layout-header-background;
+  @menu-dark-arrow-color: #161b22;
+
+  .ant-select.ant-select-single {
+    .ant-select-selector {
+      background-color: @layout-header-background;
+      border-color: @border-color-base;
+    }
+  }
+}
