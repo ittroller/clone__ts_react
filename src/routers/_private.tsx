@@ -5,13 +5,8 @@ import LayoutCard from 'src/layouts/private/LayoutCard';
 
 import { ProtectedRoutes } from 'src/contexts/auth/AuthContext';
 import { ROUTER_PATH } from 'src/constants';
-
-const DashboardScreen = React.lazy(
-  async () => await import('src/screens/privateScreens').then(module => ({ default: module.DashboardScreen })),
-);
-const AccountScreen = React.lazy(
-  async () => await import('src/screens/privateScreens').then(module => ({ default: module.AccountScreen })),
-);
+import { AccountScreen, DashboardScreen } from 'src/screens/privateScreens';
+import PrivateRoute from './Check';
 
 const _privateRoutes: RouteObject[] = [
   {
@@ -28,3 +23,11 @@ const _privateRoutes: RouteObject[] = [
 ];
 
 export default _privateRoutes;
+
+export const PrivateRouter: React.FC = () => {
+  return (
+    <PrivateRoute>
+      <LayoutCard></LayoutCard>
+    </PrivateRoute>
+  );
+};

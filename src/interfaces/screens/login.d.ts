@@ -32,5 +32,6 @@ declare namespace ILogin {
     isLogin?: boolean;
     isLoading?: boolean;
     error?: any;
+    role: string
   }
 }

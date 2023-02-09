@@ -5,13 +5,7 @@ import LayoutCard from 'src/layouts/public/LayoutCard';
 
 import { PublishedRoutes } from 'src/contexts/auth/AuthContext';
 import { ROUTER_PATH } from 'src/constants';
-
-const HomeScreen = React.lazy(
-  async () => await import('src/screens/publicScreens').then(module => ({ default: module.HomeScreen })),
-);
-const AboutScreen = React.lazy(
-  async () => await import('src/screens/publicScreens').then(module => ({ default: module.AboutScreen })),
-);
+import { AboutScreen, HomeScreen } from 'src/screens/publicScreens';
 
 const _publicRoutes: RouteObject[] = [
   {
