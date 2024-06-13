@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Switch } from 'antd';
@@ -19,8 +19,8 @@ const HeaderCard: React.FC = () => {
 
   const { theme, setTheme } = useTheme();
 
-  return (
-    <HeaderCardStyle className="body-header">
+  const switchLanguage = useMemo(() => {
+    return (
       <Switch
         className="switch-language"
         checkedChildren={<>{LANGUAGE.VI}</>}
@@ -31,6 +31,12 @@ const HeaderCard: React.FC = () => {
           void dispath(changeLanguageAction(anotherLanguage));
         }}
       />
+    );
+  }, [language]);
+
+  return (
+    <HeaderCardStyle className="body-header">
+      {switchLanguage}
 
       <Switch
         className="switch-theme"
